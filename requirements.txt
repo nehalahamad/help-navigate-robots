@@ -4,5 +4,6 @@ itsdangerous>=1.1.0
 Jinja2==2.10
 MarkupSafe==1.1.1
 Werkzeug>=0.14.5
+numpy >= 1.8.2
 scikit-learn==0.20.1
 pandas==0.23.4
