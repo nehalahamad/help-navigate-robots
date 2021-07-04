@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from werkzeug import secure_filename
+# from werkzeug import secure_filename
 import numpy as np
 import pandas as pd
 from sklearn import metrics
@@ -39,7 +39,6 @@ def feature_engg(data_X):
     
     data_X[["euler_t1", "euler_t2", "euler_t3"]] = quaternion_to_euler_angle(data_X['orientation_W'], data_X['orientation_X'],\
                                                                              data_X['orientation_Y'], data_X['orientation_Z'])
-
     new_df = pd.DataFrame()
 
     funct1 = {'min':'min()','max':'max()','mean':'mean()','std':'std()', 'median':'median()', 'mad':'mad()', \
@@ -60,9 +59,8 @@ def feature_engg(data_X):
             new_df[col + '_mean_change_of_abs_change'] = data_X.groupby('series_id')[col].apply(lambda x: \
                                                                                         np.mean(np.diff(np.abs(np.diff(x)))))
             new_df[col + '_max_to_min'] = new_df[col + '_max'] / new_df[col + '_min']
-    
     return new_df
-
+# -------------------------------------------------------------------
 def final(X, y=None):
     '''final() takes two values, source and target, if only one value(source) will be given then it will
     return only predicted output, if two value(source, target) will be given then it will return accuracy'''
@@ -75,7 +73,6 @@ def final(X, y=None):
     new_df = feature_engg(X)
     # scaling the features
     new_df_scaled = sk.transform(new_df)
-    
     # predicting the output 
     X_pred = lgbm.predict(new_df_scaled)
     
@@ -103,7 +100,6 @@ def upload_file1():
          y = None
 
       output = final(X, y)
-
       return str(output)
 
 		
