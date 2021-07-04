@@ -100,7 +100,7 @@ def upload_file1():
       except:
          y = None
 
-      output = final(X, y)
+#       output = final(X, y)
       return str(sklearn._version__)
 
 		
