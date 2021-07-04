@@ -1,0 +1,1 @@
+web: gunicorn upload_app:upload_file
