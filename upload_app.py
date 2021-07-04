@@ -68,8 +68,8 @@ def final(X, y=None):
     return only predicted output, if two value(source, target) will be given then it will return accuracy'''
     
     # importing pretrained model and scaler
-    sk = pickle.load(open('flask_TutorialByKrish\scaler.pkl', 'rb'))
-    lgbm = pickle.load(open('flask_TutorialByKrish\lgbm.pkl', 'rb'))
+    sk = pickle.load(open('scaler.pkl', 'rb'))
+    lgbm = pickle.load(open('lgbm.pkl', 'rb'))
     
     # featurizing the data
     new_df = feature_engg(X)
