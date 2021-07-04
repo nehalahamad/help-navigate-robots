@@ -101,7 +101,7 @@ def upload_file1():
          y = None
 
 #       output = final(X, y)
-      return str(sklearn._version__)
+      return str(sklearn.__version__)
 
 		
 if __name__ == '__main__':
