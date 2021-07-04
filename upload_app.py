@@ -94,13 +94,11 @@ def upload_file():
 def upload_file1():
    if request.method == 'POST':
       s = request.files['sourcefile']
-      s.save(secure_filename(s.filename))
-      X = pd.read_csv(s.filename)
+      X = pd.read_csv(s)
 
       try:
          t = request.files['targetfile']
-         t.save(secure_filename(t.filename))
-         y = pd.read_csv(t.filename)
+         y = pd.read_csv(t)
       except:
          y = None
 
