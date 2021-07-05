@@ -3,8 +3,9 @@ from flask import Flask, render_template, request
 import numpy as np
 import pandas as pd
 from sklearn import metrics
-import pickle
 import sklearn
+import pickle
+# from sklearn.preprocessing.data
 
 def resultant(x,y,z=0,w=0):
     return (x**2 + y**2 + z**2 + w**2)**0.5
@@ -24,7 +25,6 @@ def quaternion_to_euler_angle(q0, q1, q2, q3):
 from scipy.stats import entropy
 def Entropy(x):
     return entropy(x.value_counts()/len(x))
-#     return entropy(x)
     
 def feature_engg(data_X):
     data_X = data_X.drop(['row_id', 'measurement_number'], axis=1)
@@ -40,6 +40,7 @@ def feature_engg(data_X):
     
     data_X[["euler_t1", "euler_t2", "euler_t3"]] = quaternion_to_euler_angle(data_X['orientation_W'], data_X['orientation_X'],\
                                                                              data_X['orientation_Y'], data_X['orientation_Z'])
+
     new_df = pd.DataFrame()
 
     funct1 = {'min':'min()','max':'max()','mean':'mean()','std':'std()', 'median':'median()', 'mad':'mad()', \
@@ -60,29 +61,34 @@ def feature_engg(data_X):
             new_df[col + '_mean_change_of_abs_change'] = data_X.groupby('series_id')[col].apply(lambda x: \
                                                                                         np.mean(np.diff(np.abs(np.diff(x)))))
             new_df[col + '_max_to_min'] = new_df[col + '_max'] / new_df[col + '_min']
+    
     return new_df
-# -------------------------------------------------------------------
+
 def final(X, y=None):
     '''final() takes two values, source and target, if only one value(source) will be given then it will
     return only predicted output, if two value(source, target) will be given then it will return accuracy'''
-    
-    # importing pretrained model and scaler
-    sk = pickle.load(open('scaler.pkl', 'rb'))
-    lgbm = pickle.load(open('lgbm.pkl', 'rb'))
     
     # featurizing the data
     new_df = feature_engg(X)
     # scaling the features
     new_df_scaled = sk.transform(new_df)
+    
     # predicting the output 
     X_pred = lgbm.predict(new_df_scaled)
-    
+
+    accuracy = 'to get accuracy upload source and target data together'
+   #  return X_pred, accuracy
     if y is None:
-        return X_pred
+        return X_pred, accuracy
     else:
-        return metrics.accuracy_score(y['surface'].values, X_pred)
+        return X_pred, metrics.accuracy_score(y['surface'].values, X_pred)
 # =======================================================
+
 app = Flask(__name__)
+
+# importing pretrained model and scaler
+sk = pickle.load(open('flask_TutorialByKrish\scaler.pkl', 'rb'))
+lgbm = pickle.load(open('flask_TutorialByKrish\lgbm.pkl', 'rb'))
 
 @app.route('/')
 def upload_file():
@@ -100,8 +106,14 @@ def upload_file1():
       except:
          y = None
 
-      output = final(X, y)
-      return str(output)
+      output, accu = final(X, y)
+
+      if y is None:
+          output1 = list(zip(' '*len(output), output))
+      else:
+          output1 = list(zip(y['surface'].values, output))
+
+      return render_template('upload.html', result=output1, accuracy=accu)
 
 if __name__ == '__main__':
    app.run(debug = True)
