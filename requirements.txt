@@ -9,3 +9,4 @@ scipy>=0.15.1
 scikit-learn==0.20.1
 matplotlib>=1.4.3
 pandas>=0.19
+lightgbm==3.2.1
