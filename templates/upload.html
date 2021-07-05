@@ -1,13 +1,71 @@
 <html>
+    <head>
+        <style>
+            /* Split the screen in half */
+            .split {
+            height: 100%;
+            width: 50%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+            }
+
+            /* Control the left side */
+            .left {
+            left: 0;
+            background-color: rgb(248, 182, 182);
+            background-image: url('https://media2.giphy.com/media/1jWAx072bAJwMebcl7/giphy-downsized-large.gif');
+            }
+
+            /* Control the right side */
+            .right {
+            right: 0;
+            background-color: rgb(165, 170, 245);
+            text-align: center;
+            }
+            .centered{
+                margin-left: auto;
+                margin-right: auto;
+            }
+     
+            
+        </style>
+    </head>
    <body>
-      <form action = "/uploader" method = "POST" enctype = "multipart/form-data">
-         <label>Upload Source Data</label><br>
-         <input type="file" name="sourcefile" accept=".csv"/><br><br>
+       <div class="split left">
+           <div class="centered">
+                <h2>Welcome to Robot's World</h2>
+                <p>Source data is compulsory to upload, if only source data is uploaded, then its predicted value will be shown, if source and target, both data will be uploaded, then along with accuracy, predicted value will also be shown</p>
+                <br/>
+                <form action = "/uploader" method = "POST" enctype = "multipart/form-data">
+                    <label>Upload Source Data</label><br>
+                    <input type="file" name="sourcefile" accept=".csv"/><br><br>
+            
+                    <label>Upload Target Data</label><br>
+                    <input type="file" name="targetfile" accept=".csv"/><br><br>
+            
+                    <input type="submit"/>
+                </form>
+                <img src="">
+           </div>
+       </div>
+       <div class="split right">
+           <div class="centered">
+                <h4 class="centered">Accuracy is:    {{ accuracy }}</h4>
 
-         <label>Upload Target Data</label><br>
-         <input type="file" name="targetfile" accept=".csv"/><br><br>
-
-         <input type="submit"/>
-      </form>
+                <table border="1px" class="centered">
+                    <tr>
+                        <th>Actual</th><th>Predicted</th>
+                    </tr>
+                    {% for actual, predicted in result %}
+                    <tr>
+                        <td>{{ actual }}</td><td>{{ predicted }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+           </div>
+       </div>
    </body>
 </html>
