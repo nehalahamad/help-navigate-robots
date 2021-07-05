@@ -85,8 +85,8 @@ def final(X, y=None):
 app = Flask(__name__)
 
 # importing pretrained model and scaler
-sk = pickle.load(open('flask_TutorialByKrish\scaler.pkl', 'rb'))
-lgbm = pickle.load(open('flask_TutorialByKrish\lgbm.pkl', 'rb'))
+sk = pickle.load(open('scaler.pkl', 'rb'))
+lgbm = pickle.load(open('lgbm.pkl', 'rb'))
 
 @app.route('/')
 def upload_file():
