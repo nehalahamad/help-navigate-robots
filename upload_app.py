@@ -1,11 +1,9 @@
 from flask import Flask, render_template, request
-# from werkzeug import secure_filename
 import numpy as np
 import pandas as pd
 from sklearn import metrics
 import sklearn
 import pickle
-# from sklearn.preprocessing.data
 
 def resultant(x,y,z=0,w=0):
     return (x**2 + y**2 + z**2 + w**2)**0.5
