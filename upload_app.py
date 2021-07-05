@@ -100,9 +100,8 @@ def upload_file1():
       except:
          y = None
 
-#       output = final(X, y)
-      return str(sklearn.__version__)
+      output = final(X, y)
+      return str(output)
 
-		
 if __name__ == '__main__':
    app.run(debug = True)
