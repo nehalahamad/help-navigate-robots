@@ -16,7 +16,7 @@
             .left {
             left: 0;
             background-color: rgb(248, 182, 182);
-            background-image: url('https://media2.giphy.com/media/1jWAx072bAJwMebcl7/giphy-downsized-large.gif');
+            background-image: url({{ url_for('static', filename='img/giphy-downsized-large.gif') }});
             }
 
             /* Control the right side */
@@ -29,10 +29,14 @@
                 margin-left: auto;
                 margin-right: auto;
             }
+            p, h2, label{
+                -webkit-text-stroke-width: 0.25px;
+                -webkit-text-stroke-color: rgb(241, 92, 46);
+            }
+     
             
         </style>
     </head>
-    
    <body>
        <div class="split left">
            <div class="centered">
@@ -48,10 +52,15 @@
             
                     <input type="submit"/>
                 </form>
-                <img src="">
            </div>
+           <br/><br/>
+           <p>*Note:<br/>Download the X_train_demo and y_train_demo data from the Github <a href='https://github.com/nehalahamad/help-navigate-robots'>Link</a> and upload above to check the model performance.
+        </p>
        </div>
        <div class="split right">
+        <a href='https://github.com/nehalahamad/help-navigate-robots'>Github Link  </a><br/>
+        <a href={{ url_for('static', filename='Help Navigate Robot_6.html') }}>  Python Code</a>
+
            <div class="centered">
                 <h4 class="centered">Accuracy is:    {{ accuracy }}</h4>
 
@@ -66,6 +75,7 @@
                     {% endfor %}
                 </table>
            </div>
+           
        </div>
    </body>
 </html>
